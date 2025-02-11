@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 import Image from "./Image";
 
@@ -55,7 +61,7 @@ const Navbar = () => {
         {/* MOBILE LINK LIST */}
         <div
           className={clsx(
-            "bg-bg1 text-t1 absolute top-16 flex h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-8 text-lg font-medium transition-all ease-in-out",
+            "bg-bg1 text-t1 absolute top-16 flex h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-8 text-lg font-medium transition-all ease-in-out md:h-[calc(100vh-80px)]",
             open ? "-right-0" : "-right-[100%]",
           )}
         >
@@ -71,16 +77,21 @@ const Navbar = () => {
         </div>
       </div>
       {/* DESKTOP MENU */}
-      <div className="hidden items-center gap-8 font-medium md:flex xl:gap-12 text-t1">
+      <div className="text-t1 hidden items-center gap-8 font-medium md:flex xl:gap-12">
         <Link to="/">Home</Link>
         <Link to="/">Trending</Link>
         <Link to="/">Most Popular</Link>
         <Link to="/">About</Link>
-        <Link to="">
-          <button className="bg-btn text-t2 rounded-3xl px-4 py-2">
-            Login 👋
-          </button>
-        </Link>
+        <SignedOut>
+          <Link to="/login">
+            <button className="bg-btn text-t2 cursor-pointer rounded-3xl px-4 py-2">
+              Login 👋
+            </button>
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </div>
   );
