@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 
+import Image from "./Image";
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="flex h-16 w-full items-center justify-between md:h-20">
       <div className="flex items-center gap-2 text-2xl font-bold">
-        <img src="/logo.png" className="size-8" alt="" />
+        <Image src='logo.png' alt="Logo" w={32} h={32} />
         <span>blog</span>
       </div>
       {/* MOBILE MENU */}
