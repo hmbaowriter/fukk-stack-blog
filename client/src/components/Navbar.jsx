@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { IKImage } from "imagekitio-react";
 
 import Image from "./Image";
 
@@ -17,7 +13,16 @@ const Navbar = () => {
     <div className="flex h-16 w-full items-center justify-between md:h-20">
       {/* LOGO */}
       <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
-        <Image src="logo.png" alt="Logo" w={32} h={32} />
+        {/* <Image src="logo.png" alt="Logo" w={32} h={32} /> */}
+        <IKImage
+          urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
+          path="logo.png"
+          loading="lazy"
+          lqip={{ active: true, quality: 20 }}
+          alt="Logo"
+          width={36}
+          height={36}
+        />
         <span className="text-t1">blog</span>
       </Link>
       {/* MOBILE MENU */}
