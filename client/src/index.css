@@ -6,7 +6,8 @@
   --color-bg1: #e6e6ff;
   --color-bg2: red;
 
-  --color-t1: #24263d;
+  /* --color-t1: #24263d; */
+  --color-t1: #1e2939;
   --color-t2: #ffffff;
 
   --color-btn: #193cb8;
@@ -16,9 +17,10 @@
 
 @layer base {
   body {
-    background-color: var(--color-bg1);
-    font-family: var(--font-montserrat);
-    overflow-x: hidden;
-    width: 100vw;
+    @apply bg-bg1 font-montserrat overflow-x-hidden w-screen;
+  }
+
+  .animatedButton {
+    animation-duration: 10000ms !important;
   }
 }
