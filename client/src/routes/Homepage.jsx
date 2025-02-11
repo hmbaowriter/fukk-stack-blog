@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import MainCategories from "../components/MainCategories";
 
 const Homepage = () => {
   return (
@@ -20,18 +21,18 @@ const Homepage = () => {
             <br />
             turn traffic for your skills
           </h1>
-          <p className="text-md text-t1 mt-8 md:text-xl">
+          <p className="text-md text-t1 mt-2 md:mt-8 md:text-xl">
             This is your public journal. Use your brain for creativity, not for
             memorization.
           </p>
         </div>
         {/* animated button */}
-        <Link to={"/write"} className="relative">
+        <Link to={"/write"} className="relative hidden md:block">
           <svg
             viewBox="0 0 200 200"
             width="200"
             height="200"
-            className="text-lg tracking-widest animate-spin animatedButton"
+            className="animatedButton animate-spin text-lg tracking-widest"
           >
             <path
               id="circlePath"
@@ -63,6 +64,12 @@ const Homepage = () => {
           </button>
         </Link>
       </div>
+
+      {/* CATEGORIES */}
+      <MainCategories />
+
+      {/* FEATURED POSTS */}
+      {/* POST LIST */}
     </div>
   );
 };
