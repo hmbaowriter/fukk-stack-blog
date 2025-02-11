@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 import Image from "./Image";
 
@@ -8,10 +9,11 @@ const Navbar = () => {
 
   return (
     <div className="flex h-16 w-full items-center justify-between md:h-20">
-      <div className="flex items-center gap-2 text-2xl font-bold">
-        <Image src='logo.png' alt="Logo" w={32} h={32} />
-        <span>blog</span>
-      </div>
+      {/* LOGO */}
+      <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
+        <Image src="logo.png" alt="Logo" w={32} h={32} />
+        <span className="text-t1">blog</span>
+      </Link>
       {/* MOBILE MENU */}
       <div className="md:hidden">
         <div
@@ -53,32 +55,32 @@ const Navbar = () => {
         {/* MOBILE LINK LIST */}
         <div
           className={clsx(
-            "bg-bg1 absolute top-16 flex h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-8 text-lg font-medium transition-all ease-in-out",
+            "bg-bg1 text-t1 absolute top-16 flex h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-8 text-lg font-medium transition-all ease-in-out",
             open ? "-right-0" : "-right-[100%]",
           )}
         >
-          <a href="/">Home</a>
-          <a href="/">Trending</a>
-          <a href="/">Most Popular</a>
-          <a href="/">About</a>
-          <a href="">
+          <Link to="/">Home</Link>
+          <Link to="/">Trending</Link>
+          <Link to="/">Most Popular</Link>
+          <Link to="/">About</Link>
+          <Link to="">
             <button className="bg-btn text-t2 rounded-3xl px-4 py-2">
               Login 👋
             </button>
-          </a>
+          </Link>
         </div>
       </div>
       {/* DESKTOP MENU */}
-      <div className="hidden items-center gap-8 font-medium md:flex xl:gap-12">
-        <a href="/">Home</a>
-        <a href="/">Trending</a>
-        <a href="/">Most Popular</a>
-        <a href="/">About</a>
-        <a href="">
+      <div className="hidden items-center gap-8 font-medium md:flex xl:gap-12 text-t1">
+        <Link to="/">Home</Link>
+        <Link to="/">Trending</Link>
+        <Link to="/">Most Popular</Link>
+        <Link to="/">About</Link>
+        <Link to="">
           <button className="bg-btn text-t2 rounded-3xl px-4 py-2">
             Login 👋
           </button>
-        </a>
+        </Link>
       </div>
     </div>
   );
