@@ -5,9 +5,7 @@
 @theme {
   --color-bg1: #e6e6ff;
   --color-bg2: #f3f4f6;
-  --color-bg3: #F8FAFC
-
-  --color-t1: #1e2939;
+  --color-bg3: #f8fafc --color-t1: #1e2939;
   --color-t2: #ffffff;
   --color-t3: #6a7282;
   --color-t4: #99a1af;
@@ -20,10 +18,16 @@
 
 @layer base {
   body {
-    @apply bg-bg1 font-montserrat overflow-x-hidden w-screen;
+    @apply bg-bg1 font-montserrat w-screen overflow-x-hidden;
   }
 
   .animatedButton {
     animation-duration: 10000ms !important;
+  }
+
+  .ql-container,
+  .ql-toolbar,
+  .ql-editor {
+    border: none !important;
   }
 }
