@@ -3,7 +3,7 @@ import PostListItem from './PostListItem'
 
 const PostList = () => {
   return (
-    <div className="mt-8 flex flex-col gap-12">
+    <div className="flex flex-col gap-12">
       <PostListItem />
       <PostListItem />
       <PostListItem />

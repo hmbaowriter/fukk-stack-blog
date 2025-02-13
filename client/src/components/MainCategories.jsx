@@ -5,7 +5,7 @@ const MainCategories = () => {
   return (
     <div className="bg-t2 hidden items-center justify-center gap-8 rounded-3xl p-4 shadow-lg md:flex xl:rounded-full">
       {/* links */}
-      <div className="flex flex-1 flex-wrap items-center gap-4 md:justify-start xl:justify-between">
+      <div className="flex flex-1 flex-wrap items-center gap-4 md:justify-start lg:justify-between">
         <Link to="/posts" className="bg-btn text-t2 rounded-full px-4 py-2">
           All Posts
         </Link>
@@ -26,12 +26,6 @@ const MainCategories = () => {
           className="hover:bg-btn/5 rounded-full px-4 py-2"
         >
           Video Editing
-        </Link>
-        <Link
-          to="/posts?cat=database"
-          className="hover:bg-btn/5 rounded-full px-4 py-2"
-        >
-          Database
         </Link>
         <Link
           to="/posts?cat=copywriting"
