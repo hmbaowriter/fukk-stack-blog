@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/clerk-react";
 import { IKImage } from "imagekitio-react";
 
 const Navbar = () => {

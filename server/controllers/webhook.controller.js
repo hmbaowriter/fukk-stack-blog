@@ -33,10 +33,12 @@ const clerkWebHook = async (request, response) => {
     });
 
     await newUser.save();
+
+    // console.log("User created!!!");
   }
 
   if (evt.type === "user.deleted") {
-    const deletedUser = await User.findOneAndDelete({
+    await User.findOneAndDelete({
       clerkUserId: evt.data.id
     })
 
