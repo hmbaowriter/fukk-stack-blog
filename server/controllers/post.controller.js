@@ -1,3 +1,5 @@
+import ImageKit from "imagekit"
+
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 
@@ -78,4 +80,16 @@ const deletePost = async (request, response) => {
   response.status(200).json("Post has been deleted!!!");
 };
 
-export { getPosts, getPost, createPost, deletePost };
+// TODO: Upload file authentication
+const imagekit = new ImageKit({
+  urlEndpoint: process.env.IK_URL_ENDPOINT,
+  publicKey: process.env.IK_PUBLIC_KEY,
+  privateKey: process.env.IK_PRIVATE_KEY,
+});
+
+const uploadAuth = async (request, response) => {
+  const result = imagekit.getAuthenticationParameters();
+  response.send(result);
+}
+
+export { getPosts, getPost, createPost, deletePost, uploadAuth };
