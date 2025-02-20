@@ -1,170 +1,91 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { format } from "timeago.js";
 
 import Image from "../components/Image";
 import PostMenuActions from "../components/PostMenuActions";
 import Search from "../components/Search";
 import Comments from "../components/Comments";
 
+const fetchPost = async (slug) => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_URL}/posts/${slug}`,
+  );
+  console.log(response.data);
+  return response.data;
+};
+
 const SinglePostPage = () => {
+  const { slug } = useParams();
+
+  const { isPending, data, error } = useQuery({
+    queryKey: ["post", slug],
+    queryFn: () => fetchPost(slug),
+  });
+
+  if (isPending) return "loading...";
+  if (error) return "Something went wrong..." + error.message;
+  if (!data) return "Post not found!!!";
+
   return (
     <div className="flex flex-col gap-8">
       {/* details */}
       <div className="flex gap-8">
         <div className="flex flex-col gap-8 lg:w-3/5">
           <h1 className="text-xl font-semibold md:text-3xl xl:text-4xl 2xl:text-5xl">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi,
-            perspiciatis.
+            {data.title}
           </h1>
           <div className="text-t4 flex items-center gap-2">
             <span>Written by</span>
-            <Link className="text-btn">John Doe</Link>
+            <Link className="text-btn">{data.user.username}</Link>
             <span>on</span>
-            <Link className="text-btn">Web Design</Link>
-            <span>2 days ago</span>
+            <Link className="text-btn">{data.category}</Link>
+            <span>{format(data.createdAt)}</span>
           </div>
-          <p className="text-t3 font-medium">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel
-            veritatis repellat tempore in distinctio dolores possimus eveniet
-            asperiores. Molestiae ab quos provident deserunt libero, veritatis
-            suscipit in iste labore cum.
-          </p>
+          <p className="text-t3 font-medium">{data.desc}</p>
         </div>
         <div className="hidden w-2/5 lg:block">
-          <Image src="postImg.jpeg" w={600} className="rounded-2xl" />
+          {data.img ? (
+            <Image src={data.img} w={600} className="rounded-2xl" />
+          ) : (
+            <Image
+              src="blog-post-has-no-thumbnail.png"
+              w={600}
+              className="rounded-2xl"
+            />
+          )}
         </div>
       </div>
       {/* content */}
-      <div className="flex flex-col gap-12 md:flex-row">
+      <div className="flex flex-col gap-6 md:flex-row lg:gap-8 xl:gap-12">
         {/* text */}
-        <div className="flex flex-col gap-6 text-justify lg:text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            pariatur dolore cupiditate assumenda facilis doloremque atque,
-            magnam, reprehenderit doloribus quia recusandae unde fuga quo sed
-            quod, hic explicabo. Animi ea culpa reprehenderit repellat minima,
-            ipsa ducimus iusto odio vel quasi quibusdam praesentium. Voluptate
-            possimus, dolorum ullam ea quod laborum unde, nulla ipsum
-            praesentium placeat fugiat adipisci ducimus facilis corporis cumque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            pariatur dolore cupiditate assumenda facilis doloremque atque,
-            magnam, reprehenderit doloribus quia recusandae unde fuga quo sed
-            quod, hic explicabo. Animi ea culpa reprehenderit repellat minima,
-            ipsa ducimus iusto odio vel quasi quibusdam praesentium. Voluptate
-            possimus, dolorum ullam ea quod laborum unde, nulla ipsum
-            praesentium placeat fugiat adipisci ducimus facilis corporis cumque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            pariatur dolore cupiditate assumenda facilis doloremque atque,
-            magnam, reprehenderit doloribus quia recusandae unde fuga quo sed
-            quod, hic explicabo. Animi ea culpa reprehenderit repellat minima,
-            ipsa ducimus iusto odio vel quasi quibusdam praesentium. Voluptate
-            possimus, dolorum ullam ea quod laborum unde, nulla ipsum
-            praesentium placeat fugiat adipisci ducimus facilis corporis cumque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            pariatur dolore cupiditate assumenda facilis doloremque atque,
-            magnam, reprehenderit doloribus quia recusandae unde fuga quo sed
-            quod, hic explicabo. Animi ea culpa reprehenderit repellat minima,
-            ipsa ducimus iusto odio vel quasi quibusdam praesentium. Voluptate
-            possimus, dolorum ullam ea quod laborum unde, nulla ipsum
-            praesentium placeat fugiat adipisci ducimus facilis corporis cumque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            pariatur dolore cupiditate assumenda facilis doloremque atque,
-            magnam, reprehenderit doloribus quia recusandae unde fuga quo sed
-            quod, hic explicabo. Animi ea culpa reprehenderit repellat minima,
-            ipsa ducimus iusto odio vel quasi quibusdam praesentium. Voluptate
-            possimus, dolorum ullam ea quod laborum unde, nulla ipsum
-            praesentium placeat fugiat adipisci ducimus facilis corporis cumque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            pariatur dolore cupiditate assumenda facilis doloremque atque,
-            magnam, reprehenderit doloribus quia recusandae unde fuga quo sed
-            quod, hic explicabo. Animi ea culpa reprehenderit repellat minima,
-            ipsa ducimus iusto odio vel quasi quibusdam praesentium. Voluptate
-            possimus, dolorum ullam ea quod laborum unde, nulla ipsum
-            praesentium placeat fugiat adipisci ducimus facilis corporis cumque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-            aspernatur in, rerum reiciendis et quasi laudantium debitis
-            molestias hic sapiente? Fugit ratione, accusantium dolores
-            recusandae neque sint eaque voluptas quidem.
-          </p>
-        </div>
+        <div
+          className="flex flex-col gap-6 text-justify md:w-[3.5/5] lg:w-4/5 lg:text-lg"
+          dangerouslySetInnerHTML={{ __html: data.content }}
+        />
         {/* menu */}
-        <div className="sticky top-8 h-max px-4">
+        <div className="sticky top-8 h-max md:w-[1.5/5] lg:w-1/5">
           <h1 className="mb-4 text-sm font-medium">Author</h1>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-8">
-              <Image
-                src="userImg.jpeg"
-                className="size-12 rounded-full object-cover"
-                w={48}
-                h={48}
-              />
-              <Link>John Doe</Link>
+              {data.user.img ? (
+                <img
+                  src={data.user.img}
+                  className="size-12 rounded-full object-cover"
+                  w={48}
+                  h={48}
+                />
+              ) : (
+                <Image
+                  src="no-avatar.jpg"
+                  className="size-12 rounded-full object-cover"
+                  w={48}
+                  h={48}
+                />
+              )}
+              <Link>{data.user.username}</Link>
             </div>
             <p className="text-t3 mt-2">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.

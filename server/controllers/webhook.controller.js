@@ -29,7 +29,7 @@ const clerkWebHook = async (request, response) => {
       clerkUserId: evt.data.id,
       username: evt.data.username,
       email: evt.data.email_addresses[0].email_address,
-      img: evt.data.profile_img_url,
+      img: evt.data.profile_image_url,
     });
 
     await newUser.save();
@@ -52,7 +52,7 @@ const clerkWebHook = async (request, response) => {
       {
         username: evt.data.username,
         email: evt.data.email_addresses[0].email_address,
-        img: evt.data.profile_img_url,
+        img: evt.data.profile_image_url,
       }
     );
   }

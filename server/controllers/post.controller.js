@@ -10,7 +10,8 @@ const getPosts = async (request, response) => {
 
   const posts = await Post.find()
     .limit(limit)
-    .skip((page - 1) * limit);
+    .skip((page - 1) * limit)
+    .populate("user", "username img");
 
   const totalPosts = await Post.countDocuments();
   const hasMore = page * limit < totalPosts;
@@ -20,7 +21,7 @@ const getPosts = async (request, response) => {
 
 // TODO: get a single post by slug
 const getPost = async (request, response) => {
-  const post = await Post.findOne({ slug: req.params.slug });
+  const post = await Post.findOne({ slug: request.params.slug }).populate("user", "username img");
   response.status(200).json(post);
 };
 
