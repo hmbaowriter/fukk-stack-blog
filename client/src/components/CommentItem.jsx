@@ -4,7 +4,7 @@ import Image from "./Image";
 
 const CommentItem = () => {
   return (
-    <div className="mb-8 rounded-xl bg-bg3 p-4">
+    <div className="mb-8 rounded-xl bg-t2 p-4 ">
       <div className="flex items-center gap-4">
         <Image
           src="userImg.jpeg"

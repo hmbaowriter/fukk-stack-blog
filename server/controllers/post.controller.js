@@ -1,16 +1,21 @@
-import ImageKit from "imagekit"
+import ImageKit from "imagekit";
 
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 
 // TODO: Get posts list
 const getPosts = async (request, response) => {
-  try {
-    const posts = await Post.find();
-    response.status(200).json(posts);
-  } catch (error) {
-    response.status(500).json("");
-  }
+  const page = parseInt(request.query.page) || 1;
+  const limit = parseInt(request.query.limit) || 2;
+
+  const posts = await Post.find()
+    .limit(limit)
+    .skip((page - 1) * limit);
+
+  const totalPosts = await Post.countDocuments();
+  const hasMore = page * limit < totalPosts;
+
+  response.status(200).json({ posts, hasMore });
 };
 
 // TODO: get a single post by slug
@@ -52,7 +57,7 @@ const createPost = async (request, response) => {
 
     const post = await newPost.save();
 
-    console.log(post)
+    console.log(post);
 
     response.status(201).json({
       msg: "Post has been created!!!",
@@ -90,6 +95,6 @@ const imagekit = new ImageKit({
 const uploadAuth = async (request, response) => {
   const result = imagekit.getAuthenticationParameters();
   response.send(result);
-}
+};
 
 export { getPosts, getPost, createPost, deletePost, uploadAuth };
