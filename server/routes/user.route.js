@@ -1,9 +1,10 @@
 import express from "express";
 
+import { getUserSavedPosts, savePost } from "../controllers/user.controller.js";
+
 const router = express.Router();
 
-router.get("/userTest", (request, response) => {
-  response.status(200).send("User route");
-});
+router.get("/saved", getUserSavedPosts);
+router.patch("/save", savePost); // PATCH → Updates only specific fields of a resource. PUT → Replaces the entire resource with the new data.
 
 export default router;

@@ -30,9 +30,7 @@ const addComment = async (request, response) => {
 
   const savedComment = await newComment.save();
 
-  setTimeout(() => {
-    response.status(201).json(savedComment);
-  }, 3000);
+  response.status(201).json(savedComment);
 };
 
 // TODO: deleteComment
