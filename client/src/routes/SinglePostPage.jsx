@@ -13,7 +13,7 @@ const fetchPost = async (slug) => {
   const response = await axios.get(
     `${import.meta.env.VITE_API_URL}/posts/${slug}`,
   );
-  console.log(response.data);
+  // console.log(response.data);
   return response.data;
 };
 
@@ -125,7 +125,7 @@ const SinglePostPage = () => {
       </div>
 
       {/* COMMENTS SECTION */}
-      <Comments />
+      <Comments postId={data._id} />
     </div>
   );
 };
