@@ -1,9 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import Search from "./Search";
 
 const SideMenu = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleFilterChange = (ev) => {
+    // if the filter value is not same with current value, change value into current one
+    if (searchParams.get("sort") !== ev.target.value) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        sort: ev.target.value,
+      });
+    }
+  };
+
   return (
     <div className="sticky top-8 h-max px-4">
       <h1 className="mb-4 text-sm font-medium">Search</h1>
@@ -14,6 +26,7 @@ const SideMenu = () => {
           <input
             type="radio"
             name="sort"
+            onChange={handleFilterChange}
             value="newest"
             className="border-btn checked:bg-btn bg-t2 size-4 cursor-pointer appearance-none rounded-sm border-[1.5px]"
           />
@@ -23,6 +36,7 @@ const SideMenu = () => {
           <input
             type="radio"
             name="sort"
+            onChange={handleFilterChange}
             value="popular"
             className="border-btn checked:bg-btn bg-t2 size-4 cursor-pointer appearance-none rounded-sm border-[1.5px]"
           />
@@ -32,6 +46,7 @@ const SideMenu = () => {
           <input
             type="radio"
             name="sort"
+            onChange={handleFilterChange}
             value="trending"
             className="border-btn checked:bg-btn bg-t2 size-4 cursor-pointer appearance-none rounded-sm border-[1.5px]"
           />
@@ -41,6 +56,7 @@ const SideMenu = () => {
           <input
             type="radio"
             name="sort"
+            onChange={handleFilterChange}
             value="oldest"
             className="border-btn checked:bg-btn bg-t2 size-4 cursor-pointer appearance-none rounded-sm border-[1.5px]"
           />
