@@ -94,7 +94,11 @@ const Comments = ({ postId }) => {
             />
           )}
           {data.map((comment) => (
-            <CommentItem key={comment._id} commentItem={comment} />
+            <CommentItem
+              key={comment._id}
+              commentItem={comment}
+              postId={postId}
+            />
           ))}
         </>
       )}

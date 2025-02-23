@@ -21,7 +21,10 @@ const getPosts = async (request, response) => {
 
 // TODO: get a single post by slug
 const getPost = async (request, response) => {
-  const post = await Post.findOne({ slug: request.params.slug }).populate("user", "username img");
+  const post = await Post.findOne({ slug: request.params.slug }).populate(
+    "user",
+    "username img"
+  );
   response.status(200).json(post);
 };
 
@@ -75,6 +78,13 @@ const deletePost = async (request, response) => {
   const clerkUserId = request.auth.userId;
 
   if (!clerkUserId) return response.status(401).json("Not authenticated!!!");
+
+  const role = request.auth.sessionClaims?.metadata?.role || "user";
+
+  if (role === "admin") {
+    await Post.findByIdAndDelete(request.params.id);
+    return response.status(200).json("Post has been deleted!!!");
+  }
 
   const user = await User.findOne({ clerkUserId });
 

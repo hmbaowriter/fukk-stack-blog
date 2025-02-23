@@ -12,7 +12,6 @@ const getPostComments = async (request, response) => {
 
 // TODO: addComment
 const addComment = async (request, response) => {
-  console.log(request.body);
   const clerkUserId = request.auth.userId;
   const postId = request.params.postId;
 
@@ -40,6 +39,13 @@ const deleteComment = async (request, response) => {
 
   if (!clerkUserId) {
     return response.status(401).json("Not authenticated");
+  }
+
+  const role = request.auth.sessionClaims?.metadata?.role || "user";
+
+  if (role === "admin") {
+    await Comment.findByIdAndDelete(request.params.id);
+    return response.status(200).json("Comment deleted!!!");
   }
 
   const user = User.findOne({ clerkUserId });

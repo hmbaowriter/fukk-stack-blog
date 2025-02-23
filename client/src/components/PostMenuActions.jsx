@@ -26,9 +26,10 @@ const PostMenuActions = ({ post }) => {
     },
   });
 
+  const isAdmin = user?.publicMetadata?.role === "admin" || false;
   // savedPosts can be null or undefined, data can be an empty array
   const isSaved = savedPosts?.data?.some((p) => p === post._id) || false;
-  console.log(isSaved);
+  // console.log(isSaved);
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
@@ -90,7 +91,9 @@ const PostMenuActions = ({ post }) => {
     <div className="">
       <h1 className="mt-8 mb-4 text-sm font-medium">Actions</h1>
       {/* Save feature */}
-      {isPending ? (
+      {isAdmin ? (
+        <></>
+      ) : isPending ? (
         "Loading..."
       ) : error ? (
         "Saved post fetching failed!"
@@ -127,7 +130,7 @@ const PostMenuActions = ({ post }) => {
         </div>
       )}
       {/* Delete feature - just available for ONLY the blog owner */}
-      {user && post.user.username === user.username && (
+      {user && (post.user.username === user.username || isAdmin) && (
         <div
           className="flex cursor-pointer items-center gap-2 py-2 text-sm"
           onClick={handleDelete}
