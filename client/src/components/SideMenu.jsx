@@ -15,6 +15,14 @@ const SideMenu = () => {
       });
     }
   };
+  const handleCategoryChange = (category) => {
+    if (searchParams.get("cat") !== category) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        cat: category,
+      });
+    }
+  };
 
   return (
     <div className="sticky top-8 h-max px-4">
@@ -65,21 +73,42 @@ const SideMenu = () => {
       </div>
       <h1 className="mt-8 mb-4 text-sm font-medium">Categories</h1>
       <div className="flex flex-col gap-2 text-sm">
-        <Link className="underline" to="/posts">
+        <span
+          className="cursor-pointer underline"
+          onClick={() => handleCategoryChange("general")}
+        >
           All
-        </Link>
-        <Link className="underline" to="/posts?cat=web-design">
+        </span>
+        <span
+          className="cursor-pointer underline"
+          onClick={() => handleCategoryChange("web-design")}
+        >
           Web Design
-        </Link>
-        <Link className="underline" to="/posts?cat=development">
+        </span>
+        <span
+          className="cursor-pointer underline"
+          onClick={() => handleCategoryChange("development")}
+        >
           Development
-        </Link>
-        <Link className="underline" to="/posts?cat=copywriting">
-          Copywriting
-        </Link>
-        <Link className="underline" to="/posts?cat=database">
-          Database
-        </Link>
+        </span>
+        <span
+          className="cursor-pointer underline"
+          onClick={() => handleCategoryChange("databases")}
+        >
+          Databases
+        </span>
+        <span
+          className="cursor-pointer underline"
+          onClick={() => handleCategoryChange("seo")}
+        >
+          Search Engines
+        </span>
+        <span
+          className="cursor-pointer underline"
+          onClick={() => handleCategoryChange("marketing")}
+        >
+          Marketing
+        </span>
       </div>
     </div>
   );
