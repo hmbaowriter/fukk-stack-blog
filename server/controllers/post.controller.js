@@ -8,10 +8,64 @@ const getPosts = async (request, response) => {
   const page = parseInt(request.query.page) || 1;
   const limit = parseInt(request.query.limit) || 2;
 
-  const posts = await Post.find()
+  const query = {};
+
+  // console.log(request.query);
+
+  const cat = request.query.cat;
+  const author = request.query.author;
+  const searchQuery = request.query.search;
+  const sortQuery = request.query.sort;
+
+  if (cat) {
+    query.category = cat;
+  }
+
+  if (searchQuery) {
+    // If searchQuery exists, perform a case-insensitive search on the "title" field
+    // using a regular expression to match titles that contain the searchQuery string.
+    query.title = { $regex: searchQuery, $options: "i" };
+  }
+
+  if (author) {
+    const user = await User.findOne({ username: author }).select("_id");
+
+    if (!user) {
+      return res.status(404).json("No post found!");
+    }
+
+    query.user = user._id;
+  }
+
+  let sortObj = { createdAt: -1 };
+
+  if (sortQuery) {
+    switch (sortQuery) {
+      case "newest":
+        sortObj = { createdAt: -1 };
+        break;
+      case "oldest":
+        sortObj = { createdAt: 1 };
+        break;
+      case "popular":
+        sortObj = { visit: -1 };
+        break;
+      case "trending":
+        sortObj = { visit: -1 };
+        query.createdAt = {
+          $gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
+        };
+        break;
+      default:
+        break;
+    }
+  }
+
+  const posts = await Post.find(query)
+    .populate("user", "username img")
+    .sort(sortObj)
     .limit(limit)
-    .skip((page - 1) * limit)
-    .populate("user", "username img");
+    .skip((page - 1) * limit);
 
   const totalPosts = await Post.countDocuments();
   const hasMore = page * limit < totalPosts;
